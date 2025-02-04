@@ -1,0 +1,476 @@
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdlib.h>
+struct node
+{
+    char *name,*dept,*sec,*id;
+    char *section;
+    int fee,room;
+    struct node *next;
+
+};
+struct node *head;
+struct node *newstudent;
+int open,run=5;
+
+void add();
+void display(struct node *heada);
+void application();
+
+
+
+void create()
+{
+    head=(struct node*)malloc(sizeof(struct node));
+    struct node *student1=(struct node*)malloc(sizeof(struct node));
+    struct node *student2=(struct node*)malloc(sizeof(struct node));
+    struct node *student3=(struct node*)malloc(sizeof(struct node));
+    struct node *student4=(struct node*)malloc(sizeof(struct node));
+    struct node *student5=(struct node*)malloc(sizeof(struct node));
+    struct node *student6=(struct node*)malloc(sizeof(struct node));
+
+
+    head->name="Tabassum Laz";
+    head->dept="CSE";
+    head->sec="PC-A";
+    head->id="212-15-4139";
+    head->room=112;
+    head->next=student1;
+
+    student1->name="Farha";
+    student1->dept="SWE";
+    student1->sec="PC-B";
+    student1->id="213-35-4333";
+    student1->room=113;
+    student1->next=student2;
+
+    student2->name="Farjana";
+    student2->dept="EEE";
+    student2->sec="PC-A";
+    student2->id="201-35-4334";
+    student2->room=114;
+    student2->next=student3;
+
+
+    student3->name="Tithi";
+    student3->dept="SWE";
+    student3->sec="PC-A";
+    student3->id="213-35-4222";
+    student3->room=115;
+    student3->next=student5;
+
+    student5->name="Bushra";
+    student5->dept="LLB";
+    student5->sec="PC-A";
+    student5->id="221-35-4222";
+    student5->room=116;
+    student5->next=NULL;
+
+}
+int countseat(struct node *temp)
+{
+
+    int count=0;
+    while(temp!=NULL)
+    {
+        temp=temp->next;
+        count++;
+    }
+
+    return count;
+}
+void adminmenu()
+{
+    printf("\t\t\t ___________________________________\n");
+    printf("\t\t\t| 1.Display Student Information     |\n");
+    printf("\t\t\t| 2.Add new student                 |\n");
+    printf("\t\t\t| 3.Search Student Information      |\n");
+    printf("\t\t\t| 4.Delete Student Information      |\n");
+    printf("\t\t\t| Press 0 for main menu             |\n");
+    printf("\t\t\t|___________________________________|\n");
+}
+void studentmenu()
+{
+    printf("\t\t\t _____________________________\n");
+    printf("\t\t\t| 1.Availabe Seat             |\n");
+    printf("\t\t\t| 2.Apply for seat            |\n");
+    printf("\t\t\t| Press 0 for main menu       |\n");
+    printf("\t\t\t|_____________________________|\n");
+}
+void search()
+{
+    char *searching;
+    int result=0;
+    searching=(struct node*)malloc(sizeof(struct node));
+    printf("\t\t\tPlease Enter The Student ID: ");
+    scanf("%s",searching);
+    int j=0;
+    printf("\t\t\tSearching Student Inforamation........\n\n\n");
+    struct node *temp=(struct node*)malloc(sizeof(struct node));
+    temp=head;
+
+    while(temp!=NULL)
+    {
+        result=strcmp(searching,temp->id);
+
+        if(result==0)
+        {
+            printf("\t\t\t               <<RESULT>>                \n");
+            printf("\t\t\t ________________________________________\n") ;
+            printf("\t\t\t| Name: %s                               \n",temp->name);
+            printf("\t\t\t| Department: %s                         \n",temp->dept);
+            printf("\t\t\t| Section: %s                            \n",temp->sec);
+            printf("\t\t\t| ID: %s                                 \n",temp->id);
+            printf("\t\t\t| Room No.: %d                           \n",temp->room);
+            printf("\t\t\t|________________________________________\n");
+            j=1;
+            break;
+        }
+        temp=temp->next;
+    }
+    if(j==0)
+    {
+        printf("\t\t\tCouldn't Find Information\n");
+        adminmenu();
+    }
+
+}
+void delete()
+{
+    struct node *temp=(struct node*)malloc(sizeof(struct node));
+    struct node *deleteid=(struct node*)malloc(sizeof(struct node));
+    struct node *temp2;
+
+    temp = head;
+    temp2 = head;
+    printf("\t\t\tPlease Enter The Student ID: ");
+    scanf("%s",deleteid);
+    int result,choice;
+    int j=0;
+    printf("\n\n\t\t\tSearching Student Information For Delete........\n\n\n");
+
+    while(temp!=NULL)
+    {
+        result=strcmp(deleteid,temp->id);
+
+        if(result==0)
+        {
+            printf("\t\t\t               <<RESULT>>                \n");
+            printf("\t\t\t ________________________________________\n") ;
+            printf("\t\t\t| Name: %s                               \n",temp->name);
+            printf("\t\t\t| Department: %s                         \n",temp->dept);
+            printf("\t\t\t| Section: %s                            \n",temp->sec);
+            printf("\t\t\t| ID: %s                                 \n",temp->id);
+            printf("\t\t\t| Room No.: %d                           \n",temp->room);
+            printf("\t\t\t|________________________________________\n");
+            j=1;
+            printf("\t\t\t <->Press 1 For Delete<->Press 2 For Back<->\n\t\t\t");
+            scanf("%d",&choice);
+            if(choice==1)
+            {
+
+                printf("\t\t\tDelete Information Successfully\n");
+
+                if(temp==temp2)
+                {
+                    head = head->next;
+                    free(temp);
+                }
+                else
+                {
+                    temp2->next = temp->next;
+                    free(temp);
+                }
+
+            }
+            if(choice==2)
+            {
+                break;
+            }
+
+        }
+        temp2 = temp;
+        temp = temp->next;
+    }
+
+
+
+    if(j==0)
+    {
+        printf("\t\t\tCouldn't Find Information\n");
+        adminmenu();
+    }
+
+
+
+}
+void admin()
+{
+    int choice;
+    adminmenu();
+
+    while(1)
+    {
+        printf("\t\t\t");
+        scanf("%d",&choice);
+        if(choice==1)
+        {
+            display(head);
+            adminmenu();
+        }
+        if(choice==2)
+        {
+            add();
+            adminmenu();
+        }
+        if(choice==3)
+        {
+            search();
+            adminmenu();
+        }
+        if(choice==4)
+        {
+            delete();
+            adminmenu();
+        }
+        if(choice==0)
+        {
+            break;
+        }
+    }
+
+
+}
+void add()
+{
+    if(open==1)
+    {
+        open = 0;
+        if(newstudent==NULL)
+        {
+            printf("\t\t\tThere is no application\n");
+        }
+        else
+        {
+
+            struct node *tra=head;
+            printf("\t\t\tEnter the new student room No.: ");
+            int n;
+            scanf("%d",&n);
+            printf("\t\t\t<->Successfully Added Information<->\n");
+            while(tra->next!=NULL)
+            {
+                tra=tra->next;
+
+                newstudent->room=n;
+            }
+            tra->next=newstudent;
+
+        }
+    }
+    else
+    {
+        printf("\t\t\tThere is no application\n");
+    }
+
+}
+struct node *student()
+{
+    int choice;
+    struct node *temp;
+    printf("\n\t\t\tChoose One: \n");
+    studentmenu();
+    while(1)
+    {
+        printf("\t\t\t");
+        scanf("%d",&choice);
+        if(choice==1)
+        {
+            int number_of_seat=countseat(head);
+            int availableseat=50-number_of_seat;
+            printf("\t\t\t ___________________________________\n");
+            printf("\t\t\t| Availabe Seat: %d                 |\n",availableseat);
+            printf("\t\t\t|___________________________________|\n");
+            studentmenu();
+        }
+        if(choice==2)
+        {
+            if(run<=50)
+            {
+                run++;
+                application();
+            }
+            else
+            {
+                printf("\t\t\tThere is no available seat\n\t\t\tPlease Contact Later....\n");
+            }
+
+
+        }
+        if (choice==0)
+        {
+            break;
+        }
+    }
+}
+void application()
+{
+
+
+    int n;
+    char *name,*sec,*id,*dept;
+    open=1;
+    name=(struct node*)malloc(sizeof(struct node));
+    dept=(struct node*)malloc(sizeof(struct node));
+    id=(struct node*)malloc(sizeof(struct node));
+    sec=(struct node*)malloc(sizeof(struct node));
+    printf("\t\t\tPlease give your information: \n");
+    printf("\t\t\tYour Name: ");
+    scanf("%s",name);
+    fflush(stdin);
+    printf("\t\t\tDepartment: ");
+    scanf("%s",dept);
+    fflush(stdin);
+    printf("\t\t\tSection: ");
+    scanf("%s",sec);
+    printf("\t\t\tID: ");
+    scanf("%s",id);
+    printf("\t\t\tYou need to pay 3000 tk\n");
+    printf("\t\t\t ___________________________________\n");
+    printf("\t\t\t| Are You........                   |\n");
+    printf("\t\t\t| 1.Agree                           |\n");
+    printf("\t\t\t| 2.Disagree                        |\n");
+    printf("\t\t\t|___________________________________|\n");
+    printf("\t\t\t");
+    scanf("%d",&n);
+
+    if(n==1)
+    {
+
+        printf("\t\t\tYour request accepted\n");
+
+        newstudent=(struct node*)malloc(sizeof(struct node));
+
+
+        newstudent->name=name;
+        newstudent->dept=dept;
+        newstudent->sec=sec;
+        newstudent->id=id;
+        newstudent->next=NULL;
+
+
+    }
+    else if(n==2)
+    {
+        printf("\t\t\tYour request cannot proceed now\n\t\t\tThank You\n");
+        newstudent=NULL;
+    }
+    int back;
+
+    printf("\t\t\t ______________________\n");
+    printf("\t\t\t| 1.Availabe Seat      |\n");
+    printf("\t\t\t| 2.Apply for seat     |\n");
+    printf("\t\t\t| Press 0 for stop     |\n");
+    printf("\t\t\t|______________________|\n");
+
+
+}
+
+
+void display(struct node *heada)
+{
+    int i=1;
+    while(heada!=NULL)
+    {
+        printf("\t\t\t _______________________________________\n");
+        printf("\t\t\t| %d.Name: %s\n",i,heada->name);
+        printf("\t\t\t| Department: %s\n",heada->dept);
+        printf("\t\t\t| Section: %s\n",heada->sec);
+        printf("\t\t\t| ID: %s\n",heada->id);
+        printf("\t\t\t| Room No.: %d\n",heada->room);
+        printf("\t\t\t|_______________________________________\n");
+        i++;
+        printf("\n\n");
+        heada=heada->next;
+    }
+
+}
+int main()
+{
+    int choice,i,j,password;
+
+    printf("\t\t\t\t\t\t****************************\n");
+    printf("\t\t\t\t\t\t*  Hall Management System  *\n");
+    printf("\t\t\t\t\t\t****************************\n");
+
+    printf("\t\t\t<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>\n");
+    printf("\t\t\t<> Submitted TO:                     || Created BY:                         <>\n");
+    printf("\t\t\t<> Name: Zakia Sultana               || Name: Mostafizur Rahman             <>\n");
+    printf("\t\t\t<> Senior Lecturer                   || Department: CSE                     <>\n");
+    printf("\t\t\t<> Course Code: CSE135               || Section: PC-A                       <>\n");
+    printf("\t\t\t<> Daffodil International University || ID:212-15-4130                      <>\n");
+    printf("\t\t\t<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>\n");
+
+    struct node *newstudent;
+    create();
+
+
+    while(1)
+    {
+        i=1;
+        j=1;
+        printf("\n\n\t\t\tChoose One: \n");
+        printf("\t\t\t ______________________\n");
+        printf("\t\t\t| 1.Admin              |\n");
+        printf("\t\t\t| 2.For Student        |\n");
+        printf("\t\t\t| Press 0 for stop     |\n");
+        printf("\t\t\t|______________________|\n\t\t\t");
+
+        scanf("%d",&choice);
+        if(choice==1)
+        {
+            while(i<=3)
+            {
+                i++;
+                if(j<2)
+                {
+                    printf("\t\t\tPlease enter the password(Digit only): ");
+                }
+                else
+                {
+                    printf("\t\t\tPlease enter the correct password: ");
+                }
+                scanf("%d",&password);
+                if(password==7689)
+                {
+                    admin();
+                    break;
+                }
+                else
+                {
+                    printf("\t\t\tWrong Password\n");
+                    j++;
+                }
+                if(j==4)
+                {
+                    printf("\t\t\tTry Later......\n");
+                }
+
+            }
+
+        }
+        else if(choice==2)
+        {
+
+
+            student();
+
+        }
+        else if(choice==0)
+        {
+            break;
+        }
+    }
+}
+

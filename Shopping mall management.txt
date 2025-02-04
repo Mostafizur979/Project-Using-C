@@ -1,0 +1,231 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+struct node{
+char *name;
+int code;
+float price;
+struct node *next;
+};
+struct node *all;
+
+void create_information(){
+     all=(struct node*)malloc(sizeof(struct node));
+    struct node *product1=(struct node*)malloc(sizeof(struct node));
+    struct node *product2=(struct node*)malloc(sizeof(struct node));
+    struct node *product3=(struct node*)malloc(sizeof(struct node));
+    struct node *product4=(struct node*)malloc(sizeof(struct node));
+
+
+
+    all->name="Chips";
+    all->price=25.00;
+    all->code=10;
+    all->next=product1;
+
+    product1->name="Chocolate";
+    product1->price=100.00;
+    product1->code=20;
+    product1->next=product2;
+
+    product2->name="Biscuit";
+    product2->price=76.00;
+    product2->code=30;
+    product2->next=product3;
+
+    product3->name="Drinks";
+    product3->price=35.00;
+    product3->code=40;
+    product3->next=NULL;
+
+
+
+
+
+}
+void addnew(){
+struct node *new=all;
+struct node *newproduct=(struct node*)malloc(sizeof(struct node));
+char *name;
+float price;
+int code;
+name=(struct node*)malloc(sizeof(struct node));
+
+            printf("\t\t\tEnter the new Product information: \n");
+            printf("\t\t\tProduct Code: ");
+            scanf("%d",&code);
+            printf("\t\t\tName: ");
+            scanf("%s",name);
+            printf("\t\t\tprice: ");
+            scanf("%f",&price);
+
+
+            newproduct->name=name;
+            newproduct->price=price;
+            newproduct->code=code;
+            newproduct->next=NULL;
+
+
+
+            while(new->next!=NULL)
+            {
+                new=new->next;
+
+            }
+            new->next=newproduct;
+
+}
+void delete_info(){
+
+    struct node *emp=(struct node*)malloc(sizeof(struct node));
+    int code;
+    struct node *temp;
+
+    emp = all;
+    temp = all;
+    printf("\t\t\tEnter The Product Code: ");
+    scanf("%d",&code);
+    int find=0,choice;
+    while(emp!=NULL)
+    {
+
+        if(code==emp->code)
+        {    find++;
+            printf("\t\t\tFound information!!!!!\n");
+            printf("\t\t\t ___________________________________\n") ;
+            printf("\t\t\t| Product Code: %d                  \n",emp->code);
+            printf("\t\t\t| Name: %s                          \n",emp->name);
+            printf("\t\t\t| Price: %.2f                       \n",emp->price);
+            printf("\t\t\t|___________________________________\n");
+            printf("\t\t\t*Confirm -> 1\n");
+            printf("\t\t\t*Cancel -> 2\n");
+            scanf("%d",&choice);
+            if(choice==1)
+            {
+
+
+
+                if(emp==temp)
+                {
+                    all = all->next;
+                    free(emp);
+                }
+                else
+                {
+                    temp->next = emp->next;
+                    free(emp);
+                }
+                printf("\t\t\tDelete Product Successfully\n");
+
+            }
+            if(choice==2)
+            {
+                break;
+            }
+
+        }
+        temp = emp;
+        emp = emp->next;
+    }
+
+
+
+    if(find==0)
+    {
+        printf("\t\t\tNo matches!!!\n");
+
+    }
+
+}
+void search(){
+
+   struct node *emp=(struct node*)malloc(sizeof(struct node));
+   int code;
+    emp = all;
+
+    printf("\t\t\tEnter The product code: ");
+    scanf("%d",&code);
+    int find=0,choice;
+    while(emp!=NULL)
+    {
+
+        if(code==emp->code)
+        {    find++;
+            printf("\t\t\tFound information!!!!!\n");
+            printf("\t\t\t ___________________________________\n") ;
+            printf("\t\t\t| Product Code: %d                  \n",emp->code);
+            printf("\t\t\t| Name: %s                          \n",emp->name);
+            printf("\t\t\t| Price: %.2f                       \n",emp->price);
+            printf("\t\t\t|___________________________________\n");
+
+            break;
+
+        }
+        emp = emp->next;
+    }
+
+
+
+    if(find==0)
+    {
+        printf("\t\t\tNo matches!!!\n");
+
+    }
+
+}
+void show(struct node *head){
+printf("\t\t\t _________________________\n");
+while(head != NULL){
+            printf("\t\t\t| Product Code: %d                  \n",head->code);
+            printf("\t\t\t| Name: %s                          \n",head->name);
+            printf("\t\t\t| Price: %.2f                       \n\t\t\t|\n\t\t\t|\n",head->price);
+
+    head=head->next;
+}
+printf("\t\t\t|_________________________\n");
+}
+void menu(){
+printf("\t\t\t _____________________________________\n");
+printf("\t\t\t| 1.Display All Product Information   |\n");
+printf("\t\t\t| 2.Add New Product                   |\n");
+printf("\t\t\t| 3.Delete Product                    |\n");
+printf("\t\t\t| 4.Search Product                    |\n");
+printf("\t\t\t| 5.Exit                              |\n");
+printf("\t\t\t|_____________________________________|\n");
+printf("\t\t\tEnter The Serial No.: ");
+
+}
+int main(){
+int choice;
+
+printf("\t\t\t\t\t\t ___________________________________\n");
+printf("\t\t\t\t\t\t|  Shopping Mall Management System  |\n");
+printf("\t\t\t\t\t\t|___________________________________|\n");
+
+create_information();
+
+
+while(1){
+        menu();
+
+    scanf("%d",&choice);
+    if(choice==1){
+        show(all);
+    }
+    else if(choice==2){
+        addnew();
+    }
+    else if(choice==3){
+        delete_info();
+    }
+    else if(choice==4){
+        search();
+    }
+    else if(choice==5){
+        break;
+    }
+}
+
+return 0;
+}
